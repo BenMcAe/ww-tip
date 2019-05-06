@@ -3,11 +3,11 @@
         <!-- wwManager:start -->
         <div class="ww-tip-background" :style="{'background-color':  wwObject.content.data.backgroundColor}"></div>
         <div class="ww-tip-wrapper">
-            <div class="ww-tip-tilte" :style="{'color':  wwObject.content.data.styleColor }">{{ wwObject.content.data.title }}</div>
             <wwContextMenu v-if="editMode" tag="div" class="ww-tip-button" @ww-options="options()">
                 <div class="wwi wwi-config"></div>
             </wwContextMenu>
             <!-- wwManager:end -->
+            <wwObject tag="div" ww-default="ww-text" :ww-object="wwObject.content.data.title" class="ww-tip-tilte" :style="{'color':  wwObject.content.data.styleColor }"></wwObject>
             <wwLayoutColumn
                 tag="div"
                 ww-default="ww-text"
@@ -68,7 +68,14 @@ export default {
                 this.wwObject.content.data.styleColor = "#2c3e50"
             }
             if (!this.wwObject.content.data.title) {
-                this.wwObject.content.data.title = "TIP"
+                this.wwObject.content.data.title = wwLib.wwObject.getDefault({
+                    type: "ww-text",
+                    data: {
+                        text: {
+                            fr: "INDICE",
+                            en: "TIP"                        }
+                    }
+                })
             }
             if (!this.wwObject.content.data.borderColor) {
                 this.wwObject.content.data.borderColor = "#42b983"
@@ -90,7 +97,6 @@ export default {
                         }
                     }))
             }
-
 
             this.wwObjectCtrl.update(this.wwObject)
         },
@@ -282,6 +288,10 @@ export default {
     margin-bottom: 10px;
     font-weight: 600;
     font-size: 16px;
+    font-family: sans-serif;
+}
+.ww-tip-text {
+    font-size: 14px;
     font-family: sans-serif;
 }
 </style>
