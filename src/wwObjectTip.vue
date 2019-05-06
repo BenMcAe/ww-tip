@@ -4,7 +4,7 @@
         <div class="ww-tip-background" :style="{'background-color':  wwObject.content.data.backgroundColor}"></div>
         <div class="ww-tip-wrapper">
             <div class="ww-tip-tilte" :style="{'color':  wwObject.content.data.styleColor }">{{ wwObject.content.data.title }}</div>
-            <wwContextMenu v-if="editMode" tag="div" class="ww-tip-button" @ww-options="options(optionsList, $event)">
+            <wwContextMenu v-if="editMode" tag="div" class="ww-tip-button" @ww-options="options()">
                 <div class="wwi wwi-config"></div>
             </wwContextMenu>
             <!-- wwManager:end -->
@@ -49,10 +49,7 @@ export default {
             return this.wwObjectCtrl.getSectionCtrl().getEditMode() == 'CONTENT'
 
         },
-        optionsList() {
-            wwLib.wwObjectHover.removeLock();
-            return ["danger", "tips", "warning"]
-        }
+
 
 
     },
@@ -65,16 +62,16 @@ export default {
             this.loaded = true
             this.wwObject.content.data = this.wwObject.content.data || {}
             if (!this.wwObject.content.data.backgroundColor) {
-                this.wwObject.content.data.backgroundColor = ""
+                this.wwObject.content.data.backgroundColor = "#f3f5f7"
             }
             if (!this.wwObject.content.data.styleColor) {
-                this.wwObject.content.data.styleColor = ""
+                this.wwObject.content.data.styleColor = "#2c3e50"
             }
             if (!this.wwObject.content.data.title) {
-                this.wwObject.content.data.title = ""
+                this.wwObject.content.data.title = "TIP"
             }
             if (!this.wwObject.content.data.borderColor) {
-                this.wwObject.content.data.borderColor = ""
+                this.wwObject.content.data.borderColor = "#42b983"
             }
 
             if (!this.wwObject.content.data.tips) {
@@ -87,7 +84,9 @@ export default {
                     wwLib.wwObject.getDefault({
                         type: "ww-text",
                         data: {
-                            text: { fr: "Something useful", en: "Something useful" }
+                            text: {
+                                fr: "Pour changer le type de ce bloc, cliquez sur le bouton orange",
+                                en: "To change the type of this block click on the orange button"                            }
                         }
                     }))
             }
@@ -164,7 +163,7 @@ export default {
                                 fr: 'Danger'
                             },
                             desc: {
-                                en: 'Warn a user for something critical',
+                                en: 'Warn a user about something critical',
                                 fr: 'Alerter un utilisateur'
                             },
                             icon: 'fas fa-skull-crossbones',
@@ -283,8 +282,6 @@ export default {
     margin-bottom: 10px;
     font-weight: 600;
     font-size: 16px;
-    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-        Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-    -webkit-font-smoothing: antialiased;
+    font-family: sans-serif;
 }
 </style>
