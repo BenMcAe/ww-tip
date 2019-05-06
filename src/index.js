@@ -17,9 +17,7 @@ const addComponent = function() {
       },
       /* wwManager:start */
       cmsOptions: {
-        wwObjectHover: {
-          pointerEvents: true
-        },
+        wwObjectHover: {},
         wwObjectMenu: {
           items: [
             {
