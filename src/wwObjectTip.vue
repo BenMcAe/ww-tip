@@ -1,13 +1,12 @@
 <template>
     <div class="ww-tips" :style="{'border-color':  wwObject.content.data.borderColor}">
         <!-- wwManager:start -->
-        <div class="ww-tip-background" :style="{'background-color':  wwObject.content.data.backgroundColor}"></div>
+        <wwObject class="ww-tip-background" :ww-object="wwObject.content.data.background" ww-category="background"></wwObject>
         <div class="ww-tip-wrapper">
             <wwContextMenu v-if="editMode" tag="div" class="ww-tip-button" @ww-options="options()">
                 <div class="wwi wwi-config"></div>
             </wwContextMenu>
             <!-- wwManager:end -->
-            <wwObject tag="div" ww-default="ww-text" :ww-object="wwObject.content.data.title" class="ww-tip-tilte" :style="{'color':  wwObject.content.data.styleColor }"></wwObject>
             <wwLayoutColumn
                 tag="div"
                 ww-default="ww-text"
@@ -38,7 +37,6 @@ export default {
     },
     data() {
         return {
-
         }
     },
     computed: {
@@ -47,11 +45,7 @@ export default {
         },
         editMode() {
             return this.wwObjectCtrl.getSectionCtrl().getEditMode() == 'CONTENT'
-
         },
-
-
-
     },
     watch: {
     },
@@ -59,22 +53,17 @@ export default {
         init() {
             this.loaded = true
             this.wwObject.content.data = this.wwObject.content.data || {}
-            if (!this.wwObject.content.data.backgroundColor) {
-                this.wwObject.content.data.backgroundColor = "#f3f5f7"
+
+            if (!this.wwObject.content.data.background) {
+                this.wwObject.content.data.background = wwLib.wwObject.getDefault({
+                    type: 'ww-color',
+                    data: {
+                        backgroundColor: '#f3f5f7'
+                    }
+                });
             }
             if (!this.wwObject.content.data.styleColor) {
                 this.wwObject.content.data.styleColor = "#2c3e50"
-            }
-            if (!this.wwObject.content.data.title) {
-                this.wwObject.content.data.title = wwLib.wwObject.getDefault({
-                    type: "ww-text",
-                    data: {
-                        text: {
-                            fr: "INDICE",
-                            en: "TIP"
-                        }
-                    }
-                })
             }
 
             if (!this.wwObject.content.data.borderColor) {
@@ -85,8 +74,18 @@ export default {
                 this.wwObject.content.data.tips = []
             }
 
-
             if (_.isEmpty(this.wwObject.content.data.tips)) {
+                this.wwObject.content.data.tips.push(
+                    wwLib.wwObject.getDefault({
+                        type: "ww-text",
+                        data: {
+                            text: {
+                                fr: "INDICE",
+                                en: "TIP"
+                            }
+                        }
+                    })
+                )
                 this.wwObject.content.data.tips.push(
                     wwLib.wwObject.getDefault({
                         type: "ww-text",
@@ -96,7 +95,8 @@ export default {
                                 en: "To change the type of this block click on the orange button"
                             }
                         }
-                    }))
+                    })
+                )
             }
 
             this.wwObjectCtrl.update(this.wwObject)
@@ -109,6 +109,7 @@ export default {
             list.splice(options.index, 1);
             this.wwObjectCtrl.update(this.wwObject);
         },
+
         async options() {
             try {
                 wwLib.wwObjectHover.setLock(this);
@@ -120,7 +121,13 @@ export default {
                 \================================================================================================*/
                 if (typeof (result) != 'undefined') {
                     if (typeof (result.backgroundColor) != 'undefined') {
-                        this.wwObject.content.data.backgroundColor = result.backgroundColor;
+                        this.wwObject.content.data.background = wwLib.wwObject.getDefault({
+                            type: "ww-color",
+                            data: {
+                                backgroundColor: result.backgroundColor
+                            }
+                        })
+                        result.backgroundColor;
                     }
 
                     if (typeof (result.borderColor) != 'undefined') {
@@ -132,24 +139,18 @@ export default {
                     }
 
                     if (typeof (result.title) != 'undefined') {
-                        if (typeof (this.wwObject.content.data.title) != 'undefined') {
-                            this.wwObject.content.data.title = wwLib.wwObject.getDefault({
+                        if (typeof (this.wwObject.content.data.tips) != 'undefined') {
+                            this.wwObject.content.data.tips[0] = wwLib.wwObject.getDefault({
                                 type: "ww-text",
                                 data: {
                                     text: result.title
                                 }
                             })
-                        } else {
-                            this.wwObject.content.data.title.content.data.text = result.title
                         }
                     }
-
                     this.wwObjectCtrl.update(this.wwObject)
                 }
                 wwLib.wwObjectHover.removeLock();
-
-                // this.wwObjectCtrl.globalEdit(result);
-
             } catch (error) {
                 console.error(error);
             }
@@ -173,6 +174,7 @@ export default {
                             },
                             type: 'color',
                             key: 'styleColor',
+                            value: "#2c3e50",
                             valueData: 'styleColor',
                             desc: {
                                 en: 'Choose a style color for the block',
@@ -186,6 +188,7 @@ export default {
                             },
                             type: 'color',
                             key: 'backgroundColor',
+                            value: "#f3f5f7",
                             valueData: 'backgroundColor',
                             desc: {
                                 en: 'Choose a background color for the block',
@@ -199,6 +202,7 @@ export default {
                             },
                             type: 'color',
                             key: 'borderColor',
+                            value: "#42b983",
                             valueData: 'borderColor',
                             desc: {
                                 en: 'Choose a border color for the block',
@@ -244,7 +248,11 @@ export default {
                                 styleColor: "#b29400",
                                 backgroundColor: "#FFE5644D",
                                 borderColor: "#e7c000",
-                                title: "WARNING"
+                                title: {
+                                    en: "WARNING",
+                                    fr: "ATTENTION"
+                                }
+
                             }
                         },
                         Danger: {
@@ -285,7 +293,10 @@ export default {
                                 styleColor: "#2c3e50",
                                 backgroundColor: "#f3f5f7",
                                 borderColor: "#42b983",
-                                title: "TIP"
+                                title: {
+                                    en: "TIP",
+                                    fr: "Indice"
+                                }
                             }
                         },
                         Custom: {
