@@ -57,8 +57,6 @@ export default {
     },
     methods: {
         init() {
-            wwLib.wwObjectHover.removeLock();
-
             this.loaded = true
             this.wwObject.content.data = this.wwObject.content.data || {}
             if (!this.wwObject.content.data.backgroundColor) {
@@ -73,10 +71,12 @@ export default {
                     data: {
                         text: {
                             fr: "INDICE",
-                            en: "TIP"                        }
+                            en: "TIP"
+                        }
                     }
                 })
             }
+
             if (!this.wwObject.content.data.borderColor) {
                 this.wwObject.content.data.borderColor = "#42b983"
             }
@@ -93,7 +93,8 @@ export default {
                         data: {
                             text: {
                                 fr: "Pour changer le type de ce bloc, cliquez sur le bouton orange",
-                                en: "To change the type of this block click on the orange button"                            }
+                                en: "To change the type of this block click on the orange button"
+                            }
                         }
                     }))
             }
@@ -110,7 +111,7 @@ export default {
         },
         async options() {
             try {
-                // wwLib.wwObjectHover.setLock(this);
+                wwLib.wwObjectHover.setLock(this);
 
                 let options = await this.edit()
                 const result = await wwLib.wwPopups.open(options);
@@ -118,14 +119,35 @@ export default {
                   STYLE
                 \================================================================================================*/
                 if (typeof (result) != 'undefined') {
-                    this.wwObject.content.data.styleColor = result.styleColor;
-                    this.wwObject.content.data.backgroundColor = result.backgroundColor;
-                    this.wwObject.content.data.title = result.title;
-                    this.wwObject.content.data.borderColor = result.borderColor;
+                    if (typeof (result.backgroundColor) != 'undefined') {
+                        this.wwObject.content.data.backgroundColor = result.backgroundColor;
+                    }
+
+                    if (typeof (result.borderColor) != 'undefined') {
+                        this.wwObject.content.data.borderColor = result.borderColor;
+                    }
+
+                    if (typeof (result.styleColor) != 'undefined') {
+                        this.wwObject.content.data.styleColor = result.styleColor;
+                    }
+
+                    if (typeof (result.title) != 'undefined') {
+                        if (typeof (this.wwObject.content.data.title) != 'undefined') {
+                            this.wwObject.content.data.title = wwLib.wwObject.getDefault({
+                                type: "ww-text",
+                                data: {
+                                    text: result.title
+                                }
+                            })
+                        } else {
+                            this.wwObject.content.data.title.content.data.text = result.title
+                        }
+                    }
+
                     this.wwObjectCtrl.update(this.wwObject)
                 }
-                /*                 wwLib.wwObjectHover.removeLock();
-                 */
+                wwLib.wwObjectHover.removeLock();
+
                 // this.wwObjectCtrl.globalEdit(result);
 
             } catch (error) {
@@ -135,6 +157,68 @@ export default {
         },
         async edit() {
 
+
+            wwLib.wwPopups.addStory('WWTIP_CUSTOM', {
+                title: {
+                    en: 'Color picker',
+                    fr: 'Choisir une couleur'
+                },
+                type: 'wwPopupForm',
+                storyData: {
+                    fields: [
+                        {
+                            label: {
+                                en: 'Style Color:',
+                                fr: 'Coulour du style :'
+                            },
+                            type: 'color',
+                            key: 'styleColor',
+                            valueData: 'styleColor',
+                            desc: {
+                                en: 'Choose a style color for the block',
+                                fr: 'Changer le style de couleur'
+                            }
+                        },
+                        {
+                            label: {
+                                en: 'Background Color:',
+                                fr: 'Couleur du background :'
+                            },
+                            type: 'color',
+                            key: 'backgroundColor',
+                            valueData: 'backgroundColor',
+                            desc: {
+                                en: 'Choose a background color for the block',
+                                fr: 'Changer la couleur du background'
+                            }
+                        },
+                        {
+                            label: {
+                                en: 'Border Color:',
+                                fr: 'Couleur de la bordure :'
+                            },
+                            type: 'color',
+                            key: 'borderColor',
+                            valueData: 'borderColor',
+                            desc: {
+                                en: 'Choose a border color for the block',
+                                fr: 'Changer la couleur de la bordure'
+                            }
+                        },
+
+                    ]
+                },
+                buttons: {
+
+                    NEXT: {
+                        text: {
+                            en: 'Ok',
+                            fr: 'Ok'
+                        },
+                        next: false
+                    }
+                }
+            })
 
             wwLib.wwPopups.addStory('WWTIP_CODE', {
                 title: {
@@ -179,7 +263,10 @@ export default {
                                 styleColor: "#900",
                                 backgroundColor: "#ffe6e6",
                                 borderColor: "#c00",
-                                title: "WARNING"
+                                title: {
+                                    en: "WARNING",
+                                    fr: "ATTENTION"
+                                }
                             }
                         },
                         Tips: {
@@ -199,6 +286,22 @@ export default {
                                 backgroundColor: "#f3f5f7",
                                 borderColor: "#42b983",
                                 title: "TIP"
+                            }
+                        },
+                        Custom: {
+                            title: {
+                                en: 'Custom',
+                                fr: 'Customizer'
+                            },
+                            desc: {
+                                en: 'customize the block',
+                                fr: 'Customizer le block'
+                            },
+                            icon: 'fas fa-palette',
+                            shortcut: 'c',
+                            next: 'WWTIP_CUSTOM',
+                            result: {
+
                             }
                         },
                     }
