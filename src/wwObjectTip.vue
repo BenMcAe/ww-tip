@@ -127,7 +127,6 @@ export default {
                                 backgroundColor: result.backgroundColor
                             }
                         })
-                        result.backgroundColor;
                     }
 
                     if (typeof (result.borderColor) != 'undefined') {
