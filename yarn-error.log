@@ -1,8 +1,8 @@
 Arguments: 
-  /home/chihabe/.nvm/versions/node/v10.11.0/bin/node /home/chihabe/.yarn/bin/yarn.js add transform-es2015-modules-commonjs
+  /Users/fbriou/.nvm/versions/node/v10.11.0/bin/node /usr/local/Cellar/yarn/1.15.2/libexec/bin/yarn.js install
 
 PATH: 
-  /home/chihabe/.yarn/bin:/home/chihabe/.config/yarn/global/node_modules/.bin:/home/chihabe/.nvm/versions/node/v10.11.0/bin:/home/chihabe/apache-maven-3.3.9/bin:/usr/local/share/npm/bin:/home/chihabe/bin:/usr/local/bin:/home/chihabe/wwbin:/home/chihabe/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
+  /Users/fbriou/.nvm/versions/node/v10.11.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
 
 Yarn version: 
   1.15.2
@@ -11,68 +11,43 @@ Node version:
   10.11.0
 
 Platform: 
-  linux x64
+  darwin x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/transform-es2015-modules-commonjs: Not found
-      at Request.params.callback [as _callback] (/home/chihabe/.yarn/lib/cli.js:66058:18)
-      at Request.self.callback (/home/chihabe/.yarn/lib/cli.js:129541:22)
-      at Request.emit (events.js:182:13)
-      at Request.<anonymous> (/home/chihabe/.yarn/lib/cli.js:130513:10)
-      at Request.emit (events.js:182:13)
-      at IncomingMessage.<anonymous> (/home/chihabe/.yarn/lib/cli.js:130435:12)
-      at Object.onceWrapper (events.js:273:13)
-      at IncomingMessage.emit (events.js:187:15)
-      at endReadableNT (_stream_readable.js:1092:12)
-      at process._tickCallback (internal/process/next_tick.js:63:19)
+  SyntaxError: /Users/fbriou/Documents/Dev/weweb-public/ww-tip/package.json: Unexpected token } in JSON at position 399
+      at JSON.parse (<anonymous>)
+      at /usr/local/Cellar/yarn/1.15.2/libexec/lib/cli.js:1625:59
+      at Generator.next (<anonymous>)
+      at step (/usr/local/Cellar/yarn/1.15.2/libexec/lib/cli.js:304:30)
+      at /usr/local/Cellar/yarn/1.15.2/libexec/lib/cli.js:315:13
 
 npm manifest: 
   {
-    "name": "ww-tip",
-    "type": "wwObject",
-    "wewebPublic": "true",
-    "repository": {
-      "type": "git",
-      "url": "https://github.com/WeWeb-Public/ww-tip"
-    },
-    "version": "0.0.1",
-    "private": true,
-    "scripts": {
-      "build": "weweb-build",
-      "serve": "weweb-serve",
-      "upload": "weweb-upload"
-    },
-    "dependencies": {
-      "babel-core": "^6.26.3",
-      "vue": "^2.5.16"
-    },
-    "devDependencies": {
-      "@vue/cli-plugin-babel": "^3.0.5",
-      "@vue/cli-plugin-eslint": "^3.0.5",
-      "@vue/cli-service": "^3.0.5",
-      "autoprefixer": "^9.4.3",
-      "babel-loader": "^7.1.4",
-      "babel-plugin-transform-async-to-generator": "^6.24.1",
-      "cache-loader": "^1.2.5",
-      "css-loader": "^0.28.11",
-      "node-sass": "^4.11.0",
-      "postcss": "^7.0.7",
-      "sass-loader": "^7.1.0",
-      "string-replace-loader": "^2.1.1",
-      "url-loader": "^1.1.2",
-      "vue-loader": "^15.2.2",
-      "vue-style-loader": "^4.1.0",
-      "vue-template-compiler": "^2.5.16",
-      "webpack": "^4.30.0",
-      "webpack-cli": "^3.3.2",
-      "webpack-dev-server": "^3.1.4",
-      "weweb-client": "^1.0.33"
-    },
-    "browserslist": [
-      "> 1%",
-      "last 2 versions",
-      "not ie <= 8"
-    ]
+      "name": "ww-tip",
+      "type": "wwObject",
+      "wewebPublic": "true",
+      "repository": {
+          "type": "git",
+          "url": "https://github.com/WeWeb-Public/ww-tip"
+      },
+      "version": "0.0.1",
+      "private": true,
+      "scripts": {
+          "build": "weweb-build",
+          "serve": "weweb-serve",
+          "upload": "weweb-upload"
+      },
+      "dependencies": {
+          "vue": "^2.5.16",
+      },
+      "devDependencies": {
+          "weweb-client": "^1.0.40"
+      },
+      "browserslist": [
+          "> 1%",
+          "last 2 versions",
+          "not ie <= 8"
+      ]
   }
 
 yarn manifest: 
@@ -1839,6 +1814,24 @@ Lockfile:
       babel-helper-remap-async-to-generator "^6.24.1"
       babel-plugin-syntax-async-functions "^6.8.0"
       babel-runtime "^6.22.0"
+  
+  babel-plugin-transform-es2015-modules-commonjs@^6.26.2:
+    version "6.26.2"
+    resolved "https://registry.yarnpkg.com/babel-plugin-transform-es2015-modules-commonjs/-/babel-plugin-transform-es2015-modules-commonjs-6.26.2.tgz#58a793863a9e7ca870bdc5a881117ffac27db6f3"
+    integrity sha512-CV9ROOHEdrjcwhIaJNBGMBCodN+1cfkwtM1SbUHmvyy35KGT7fohbpOxkE2uLz1o6odKK2Ck/tz47z+VqQfi9Q==
+    dependencies:
+      babel-plugin-transform-strict-mode "^6.24.1"
+      babel-runtime "^6.26.0"
+      babel-template "^6.26.0"
+      babel-types "^6.26.0"
+  
+  babel-plugin-transform-strict-mode@^6.24.1:
+    version "6.24.1"
+    resolved "https://registry.yarnpkg.com/babel-plugin-transform-strict-mode/-/babel-plugin-transform-strict-mode-6.24.1.tgz#d5faf7aa578a65bbe591cf5edae04a0c67020758"
+    integrity sha1-1fr3qleKZbvlkc9e2uBKDGcCB1g=
+    dependencies:
+      babel-runtime "^6.22.0"
+      babel-types "^6.24.1"
   
   babel-register@^6.26.0:
     version "6.26.0"
@@ -9069,7 +9062,7 @@ Lockfile:
       vue-hot-reload-api "^2.3.0"
       vue-style-loader "^4.1.0"
   
-  vue-style-loader@^4.1.0:
+  vue-style-loader@^4.1.0, vue-style-loader@^4.1.2:
     version "4.1.2"
     resolved "https://registry.yarnpkg.com/vue-style-loader/-/vue-style-loader-4.1.2.tgz#dedf349806f25ceb4e64f3ad7c0a44fba735fcf8"
     integrity sha512-0ip8ge6Gzz/Bk0iHovU9XAUQaFt/G2B61bnWa2tCcqqdgfHs1lF9xXorFbE55Gmy92okFT+8bfmySuUOu13vxQ==
